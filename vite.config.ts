@@ -7,17 +7,51 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   const envPath = path.resolve(__dirname, '.env');
-  if (fs.existsSync(envPath)) {
-    const parsed = dotenv.parse(fs.readFileSync(envPath));
-    if (parsed.VITE_SUPABASE_URL) {
-      process.env.VITE_SUPABASE_URL = parsed.VITE_SUPABASE_URL;
+  const fileEnv = fs.existsSync(envPath)
+    ? dotenv.parse(fs.readFileSync(envPath))
+    : {};
+
+  const pickEnv = (...keys: string[]) => {
+    for (const k of keys) {
+      const val = (fileEnv[k] ?? process.env[k] ?? '').trim();
+      if (val && val !== 'undefined' && val !== 'null') {
+        return val;
+      }
     }
-    if (parsed.VITE_SUPABASE_ANON_KEY) {
-      process.env.VITE_SUPABASE_ANON_KEY = parsed.VITE_SUPABASE_ANON_KEY;
-    }
+    return '';
+  };
+
+  const resolvedUrl = pickEnv(
+    'VITE_SUPABASE_URL',
+    'NEXT_PUBLIC_SUPABASE_URL',
+    'SUPABASE_URL'
+  );
+  const resolvedAnonKey = pickEnv(
+    'VITE_SUPABASE_ANON_KEY',
+    'VITE_SUPABASE_PUBLISHABLE_KEY',
+    'NEXT_PUBLIC_SUPABASE_ANON_KEY',
+    'NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY',
+    'SUPABASE_ANON_KEY',
+    'SUPABASE_PUBLISHABLE_KEY'
+  );
+
+  if (resolvedUrl) {
+    process.env.VITE_SUPABASE_URL = resolvedUrl;
   }
+  if (resolvedAnonKey) {
+    process.env.VITE_SUPABASE_ANON_KEY = resolvedAnonKey;
+  }
+
   return {
     plugins: [react(), tailwindcss()],
+    define: {
+      ...(resolvedUrl
+        ? { 'import.meta.env.VITE_SUPABASE_URL': JSON.stringify(resolvedUrl) }
+        : {}),
+      ...(resolvedAnonKey
+        ? { 'import.meta.env.VITE_SUPABASE_ANON_KEY': JSON.stringify(resolvedAnonKey) }
+        : {}),
+    },
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),

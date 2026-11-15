@@ -1,8 +1,12 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
+const DEFAULT_SUPABASE_URL = 'https://iwdgkfattksnhllmagsu.supabase.co';
+const DEFAULT_SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_fJSCIlADXGLeTmMLy_xMeA_XR8Me-jS';
+
 function normalizeEnvValue(raw: string | undefined, keyName: string): string {
   if (!raw) return '';
   let val = raw.trim();
+  if (!val || val === 'undefined' || val === 'null') return '';
   if (
     (val.startsWith('"') && val.endsWith('"')) ||
     (val.startsWith("'") && val.endsWith("'"))
@@ -19,6 +23,7 @@ function normalizeEnvValue(raw: string | undefined, keyName: string): string {
       val = val.slice(1, -1).trim();
     }
   }
+  if (!val || val === 'undefined' || val === 'null') return '';
   return val;
 }
 
@@ -40,11 +45,23 @@ function isValidHttpUrl(value: string): boolean {
   }
 }
 
-const supabaseUrl = normalizeSupabaseUrl(import.meta.env.VITE_SUPABASE_URL as string | undefined);
-const supabaseAnonKey = normalizeEnvValue(
+const envSupabaseUrl = normalizeSupabaseUrl(
+  import.meta.env.VITE_SUPABASE_URL as string | undefined
+);
+const envSupabaseAnonKey = normalizeEnvValue(
   import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined,
   'VITE_SUPABASE_ANON_KEY'
 );
+
+const supabaseUrl =
+  envSupabaseUrl && !envSupabaseUrl.includes('your-project-ref') && isValidHttpUrl(envSupabaseUrl)
+    ? envSupabaseUrl
+    : DEFAULT_SUPABASE_URL;
+
+const supabaseAnonKey =
+  envSupabaseAnonKey && !envSupabaseAnonKey.includes('your-supabase-anon')
+    ? envSupabaseAnonKey
+    : DEFAULT_SUPABASE_PUBLISHABLE_KEY;
 
 export const isSupabaseConfigured = Boolean(
   supabaseUrl &&
