@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#5359A7" />
+    <title>Offline · School Manager</title>
+    <style>
+      *, *::before, *::after { box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        padding: 0;
+        min-height: 100dvh;
+        font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background: #F8F8FD;
+        color: #23265A;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .card {
+        width: min(440px, calc(100vw - 2rem));
+        background: #FFFFFF;
+        border: 1px solid #E4E6F3;
+        border-radius: 24px;
+        padding: clamp(1.5rem, 4vw, 2.5rem);
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(35, 38, 90, 0.06);
+      }
+      .badge {
+        width: 64px;
+        height: 64px;
+        border-radius: 18px;
+        background: #5359A7;
+        color: #FFFFFF;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.25rem;
+      }
+      h1 {
+        margin: 0 0 0.625rem;
+        font-family: 'Sora', -apple-system, BlinkMacSystemFont, sans-serif;
+        font-size: clamp(1.25rem, 3vw, 1.5rem);
+        font-weight: 800;
+        color: #23265A;
+      }
+      p {
+        margin: 0 0 1.5rem;
+        font-size: 0.9375rem;
+        line-height: 1.6;
+        color: #555A8A;
+      }
+      button {
+        appearance: none;
+        border: none;
+        background: #5359A7;
+        color: #FFFFFF;
+        font: 700 0.9375rem/1 inherit;
+        padding: 0.875rem 1.75rem;
+        min-height: 44px;
+        border-radius: 9999px;
+        cursor: pointer;
+        width: 100%;
+      }
+      button:hover { opacity: 0.94; }
+    </style>
+  </head>
+  <body>
+    <main class="card">
+      <div class="badge" aria-hidden="true">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9.5L12 3l9 6.5" />
+          <path d="M4 9.5h16" />
+          <line x1="6" y1="12" x2="6" y2="18" />
+          <line x1="10" y1="12" x2="10" y2="18" />
+          <line x1="14" y1="12" x2="14" y2="18" />
+          <line x1="18" y1="12" x2="18" y2="18" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+          <line x1="2" y1="21" x2="22" y2="21" />
+        </svg>
+      </div>
+      <h1>You are offline</h1>
+      <p>
+        School Manager could not reach the network right now. Reconnect to the internet and try again.
+      </p>
+      <button type="button" onclick="window.location.reload()">Try again</button>
+    </main>
+  </body>
+</html>

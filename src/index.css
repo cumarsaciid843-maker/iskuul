@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sora: 'Sora', sans-serif;
+  --font-manrope: 'Manrope', sans-serif;
+  --font-arabic: 'Cairo', 'Tajawal', sans-serif;
+  --color-brand-primary: #5458A7;
+  --color-brand-hover: #474B96;
+  --color-brand-light: #EEEEF8;
+  --color-brand-border: #E4E6F3;
+  --color-brand-navy: #23265A;
+}
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+body {
+  font-family: 'Manrope', sans-serif;
+  color: #23265A;
+  background-color: #FFFFFF;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+svg,
+canvas,
+video {
+  max-width: 100%;
+}
+
+h1, h2, h3, .font-sora {
+  font-family: 'Sora', sans-serif;
+}
+
+html[dir="rtl"] body,
+html[dir="rtl"] h1,
+html[dir="rtl"] h2,
+html[dir="rtl"] h3,
+html[dir="rtl"] .font-sora,
+html[dir="rtl"] .font-manrope {
+  font-family: 'Cairo', 'Tajawal', 'Manrope', sans-serif;
+}
+
+.ltr-inline {
+  direction: ltr;
+  unicode-bidi: isolate;
+  display: inline-block;
+}
+
+.wrap-anywhere {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Prevent iOS Safari auto-zoom on form controls on small screens while keeping desktop unchanged */
+@media (max-width: 767px) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Touch-friendly tap sizing below 1024px without inflating desktop compact buttons */
+@media (max-width: 1023px) {
+  button,
+  [role="button"],
+  a[href] {
+    touch-action: manipulation;
+  }
+}
+

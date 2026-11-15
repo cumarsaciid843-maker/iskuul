@@ -1,0 +1,6 @@
+{
+  "name": "School Manager",
+  "description": "Multi-school management platform to manage students, teachers, classes, attendance, fees, and school subscriptions.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
